@@ -1,0 +1,42 @@
+[
+	  # Provider configuration example.
+	  # ALL fields are required.
+	  # If no value is applicable, use empty string ("").
+
+	  # Fields value MUST be surrounded with double quotes.
+	  # '\' is used as the escape char. Use '\\' for putting '\' in a field value.
+	
+	  # Java comments are allowed. Strings starting with '#' (preceded with zero or more spaces) are comments too.
+	
+	  {
+	      name: "Proxy Provider Name" // Keep it short
+	      description : "My First Proxy Provider Configuration" // free text
+	      # This is a comment, can appear anywhere
+	
+	      startUrl: "http://proxy-provider.example.com/..."
+	      spamWarningCssQuery:"/* CSS query to detect any spam block */"
+	      decodingScript: " /* Put here a JS script filename or an empty string. One mandatory function: uncipherContext(decodingContext) */ "
+	
+	      # CSS queries below are provided here for example only
+	      proxyRowsCssQuery: "#content > div > table > tbody > tr[class~=odd|even]"
+	      proxyHostCellCssQuery: "td:nth-of-type(1)"
+	      proxyPortCellCssQuery: "td:nth-of-type(1)" // Java code can parse IP:Port format
+	
+	      proxyLatencyValueCssQuery: "" // Empty string means no latency value available
+	      proxyLatencyValueRegex: ""
+	
+	      proxyAnonimityTypeValueCssQuery: "td:nth-of-type(2)"
+	      proxyAnonimityTypeMap: {
+	      # On the left hand, provide the proxy provider anonimity type value
+	      # On the right hand, provide the Anonimity enum corresponding value 
+	          Elite : ELITE
+	          Anonymous : ANONYMOUS
+	          Transparent : TRANSPARENT
+	      }
+	
+	      nextPageUrlCssQuery: "" // The CSS to determine the next page to fetch (used in paginated proxies list)
+	                              // Use empty string if there are no next page
+	  }
+
+	...
+]

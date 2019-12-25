@@ -1,0 +1,210 @@
+// TODO: Do we really need to extract the latency? because when the latency is unknown we can determine it ourselves.
+// TODO: Add the following proxy providers
+// http://atomintersoft.com/high_anonymity_elite_proxy_list
+// http://www.freeproxylists.com/elite.html
+// http://www.proxylists.net/us_0_ext.html
+// https://www.my-proxy.com/free-elite-proxy.html
+// http://www.freeproxylists.net/fr/?c=&pt=&pr=&a%5B%5D=2&u=0
+// http://www.httptunnel.ge/ProxyListForFree.aspx
+// http://proxydb.net/?protocol=http&protocol=https&anonlvl=4&country=
+// https://proxyscrape.com/free-proxy-list (See also: https://proxyscrape.com/best-free-proxy-list-websites)
+// https://github.com/Python3WebSpider/ProxyPool/blob/master/proxy%20provider.txt
+[
+    /** see proxy_providers.hjson.help for configuration details **/
+    {
+       name: "best-proxy.com"
+       description: "best-proxy.com (alias proxy-list.org). Updates every minute. :: Anonymous (ELITE) Proxies"
+
+       startUrl: "https://best-proxy.com/english/index.php"
+       spamWarningCssQuery:""
+       decodingScript: "decode-best-proxy.js"
+
+        proxyRowsCssQuery: "#proxy-table > div.table-wrap > div > ul"
+        proxyHostCellCssQuery: "li.proxy"
+        proxyPortCellCssQuery: "li.proxy"
+
+        proxyLatencyValueCssQuery: ""
+        proxyLatencyValueRegex: ""
+
+        proxyAnonimityTypeValueCssQuery: "li.type"
+        proxyAnonimityTypeMap: {
+            Elite : ELITE
+            Anonymous: ANONYMOUS
+            Transparent: TRANSPARENT
+        }
+
+        nextPageUrlCssQuery: "#content > div.content > div > div#proxy-table + div.table-menu > a.next"
+    }
+
+    {
+        name: "xRoxy.com"
+        description: "xRoxy :: Anonymous (ELITE) Proxies"
+
+        startUrl: "http://www.xroxy.com/proxylist.php?port=&type=Anonymous&ssl=ssl&country=&latency=&reliability=&sort=latency#table"
+		spamWarningCssQuery:""
+        decodingScript: ""
+
+        proxyRowsCssQuery: "#content > table tr[class~=row[01]]"
+        proxyHostCellCssQuery: "td:nth-of-type(2)"
+        proxyPortCellCssQuery: "td:nth-of-type(3)"
+
+        proxyLatencyValueCssQuery: "td:nth-of-type(7)"
+        proxyLatencyValueRegex: "(?<ms>\\d+)"
+
+        proxyAnonimityTypeValueCssQuery: "td:nth-of-type(4)"
+        proxyAnonimityTypeMap: {
+            Anonymous : ELITE
+        }
+
+        nextPageUrlCssQuery: "#content > table.tbl > tbody > tr > td:nth-child(1) > table > tbody > tr:nth-child(1) > td > small > a:matches(Page\\s+\\d+) + a"
+   }
+
+   {
+        name: "ip-adress.com"
+        description : "ip-adress.com :: Proxies (Elite, Anonymous and Transparent"
+        # As of 2017/05/20, there's no filter available directly on site
+        # The lookups of proxies are limited to 50 per day (and per IP ?)
+
+        startUrl: "http://www.ip-adress.com/proxy_list/?k=time&d=desc"
+        spamWarningCssQuery:""
+        decodingScript: ""
+
+        proxyRowsCssQuery: "#content > div > table > tbody > tr[class~=odd|even]"
+        proxyHostCellCssQuery: "td:nth-of-type(1)"
+        proxyPortCellCssQuery: "td:nth-of-type(1)" // Java code can parse IP:Port format
+
+        proxyLatencyValueCssQuery: "" // Empty string means no latency value available
+        proxyLatencyValueRegex: ""
+
+        proxyAnonimityTypeValueCssQuery: "td:nth-of-type(2)"
+        proxyAnonimityTypeMap: {
+            Elite : ELITE
+            Anonymous : ANONYMOUS
+            Transparent : TRANSPARENT
+        }
+
+        nextPageUrlCssQuery: ""
+   }
+
+   {
+       name: "free-proxy-list.net"
+       description : "free-proxy-list.net :: Proxies (any)"
+
+       startUrl: "https://free-proxy-list.net/"
+       spamWarningCssQuery:""
+       decodingScript: ""
+
+        proxyRowsCssQuery: "#proxylisttable > tbody > tr"
+        proxyHostCellCssQuery: "td:nth-of-type(1)"
+        proxyPortCellCssQuery: "td:nth-of-type(2)"
+
+        proxyLatencyValueCssQuery: ""
+        proxyLatencyValueRegex: ""
+
+        proxyAnonimityTypeValueCssQuery: "td:nth-of-type(5)"
+        proxyAnonimityTypeMap: {
+            "elite proxy" : ELITE
+            anonymous : ANONYMOUS
+            transparent : TRANSPARENT
+        }
+
+        nextPageUrlCssQuery: ""
+   }
+
+   {
+       name : "ProxyServers.pro"
+       description : "http://proxyservers.pro :: Elite Proxies"
+
+       startUrl: "http://proxyservers.pro/proxy/list/anonymity/elite/order/updated/order_dir/desc/page/1"
+       spamWarningCssQuery:"#content-content > div.antispam"
+       decodingScript: "decode-proxyservers.js"
+
+        proxyRowsCssQuery: "#content-content > div > div.table-responsive > table > tbody > tr[valign=top]"
+        proxyHostCellCssQuery: "td:nth-of-type(2)"
+        proxyPortCellCssQuery: "td:nth-of-type(3) span.port"
+
+        proxyLatencyValueCssQuery: "td:nth-of-type(5) > div:nth-child(2)"
+        proxyLatencyValueRegex: "(?<s>\\d+(?:\\.\\d+)?).+sec"
+
+        proxyAnonimityTypeValueCssQuery: "td:nth-of-type(8)"
+        proxyAnonimityTypeMap: {
+            Elite : ELITE
+        }
+
+        nextPageUrlCssQuery: "#content-content > div > div.panel-footer > ul > li.active + li a"
+   }
+
+   {
+       name: "hidemy.name"
+       description : "hidemy.name :: Proxies (HTTP,HTTPS) High, TODO:Add SOCKS 4/5"
+
+       startUrl: "https://hidemy.name/en/proxy-list/?type=hs&anon=4#list"
+       spamWarningCssQuery:""
+       decodingScript: ""
+
+        proxyRowsCssQuery: "#content-section > section.proxy > div > table > tbody > tr"
+        proxyHostCellCssQuery: "td:nth-of-type(1)"
+        proxyPortCellCssQuery: "td:nth-of-type(2)"
+
+        proxyLatencyValueCssQuery: "td:nth-of-type(4)"
+        proxyLatencyValueRegex: "(?<ms>\\d+)\\s+ms"
+
+        proxyAnonimityTypeValueCssQuery: "td:nth-of-type(6)"
+        proxyAnonimityTypeMap: {
+            High : ELITE
+            Medium : ANONYMOUS
+            Low : ANONYMOUS
+            No : TRANSPARENT
+        }
+
+        nextPageUrlCssQuery: "#content-section > section.proxy > div > div.proxy__pagination > ul > li.arrow__right > a"
+   }
+   
+   {
+   		name: "ProxyNova"
+   		description: "ProxyNova elite proxies"
+   		
+   		startUrl: "https://www.proxynova.com/proxy-server-list/elite-proxies/"
+   		spamWarningCssQuery:""
+		decodingScript: "decode-proxynova.js"
+
+        proxyRowsCssQuery: "#tbl_proxy_list > tbody > tr:has(td:not(td[colspan]))"
+	    proxyHostCellCssQuery: "td:nth-of-type(1)"
+	    proxyPortCellCssQuery: "td:nth-of-type(2)"
+
+	    proxyLatencyValueCssQuery: "td:nth-of-type(4) small"
+	    proxyLatencyValueRegex: "(?<ms>\\d+)\\s+ms"
+
+	    proxyAnonimityTypeValueCssQuery: "td:nth-of-type(7)"
+	    proxyAnonimityTypeMap: {
+          Elite : ELITE
+          Anonymous : ANONYMOUS
+          Transparent : TRANSPARENT
+		}
+
+		nextPageUrlCssQuery: ""
+   }
+
+   {
+      name: "Proxz.com"
+      description : "Proxz high anonymous proxies"
+
+      startUrl: "http://www.proxz.com/proxy_list_high_anonymous_0_ext.html"
+      spamWarningCssQuery:""
+      decodingScript: "decode-proxz.js"
+
+      proxyRowsCssQuery: "body > div > center > table > tbody > tr:nth-child(4) > td:nth-child(3) > table > tbody > tr:gt(2):not(:has(td[colspan]))"
+      proxyHostCellCssQuery: "td:nth-of-type(1)"
+      proxyPortCellCssQuery: "td:nth-of-type(2)"
+
+      proxyLatencyValueCssQuery: ""
+      proxyLatencyValueRegex: ""
+
+      proxyAnonimityTypeValueCssQuery: "td:nth-of-type(3)"
+      proxyAnonimityTypeMap: {
+          Anonymous : ELITE
+      }
+
+      nextPageUrlCssQuery: "a#__proxz_next__" // The id __proxz_next__ is added by decode-proxz.js
+   }
+]
