@@ -16,7 +16,7 @@
 		<my.webdriver.dir>my/webdriver</my.webdriver.dir>
 		<my.webdriver.extensions>${my.webdriver.dir}/extensions</my.webdriver.extensions>
 
-		<tomcat.version>9.0.7</tomcat.version>
+		<tomcat.version>9.0.30</tomcat.version>
 		<jersey.version>2.27</jersey.version>
 	</properties>
 
