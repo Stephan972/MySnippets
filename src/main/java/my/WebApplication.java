@@ -34,7 +34,7 @@ public class WebApplication extends ConsoleApplication {
 			server.await();
 
 			return ExitCode.SUCCESS;
-		} catch (LifecycleException | ServletException e) {
+		} catch (LifecycleException e) {
 			throw new ApplicationException(e);
 		}
 	}
